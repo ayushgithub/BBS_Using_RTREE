@@ -213,8 +213,25 @@ def Mindist(Region):
 	return Distance**0.5
 	pass
 
+def MinList(Region):
+	TempList = []
+	for i in range(NumDimension):
+		key = str(i) + 'min'
+		TempList.append(Region[key])
+	return TempList
+	pass
+
 def Dominate(element):
-	
+	answer = True
+	elementList = MinList(element.Region)
+	for point in SkylinePoints:
+		pointList = MinList(point.Region)
+		for i in range(NumDimension):
+			if elementList[i] < pointList[i]:
+				answer = False
+		if answer == True:
+			return answer
+		answer = True
 	pass
 
 def BBS(root):
@@ -225,11 +242,15 @@ def BBS(root):
 			element = heapq.heappop(Heap)
 			if Dominate(element):
 				continue
+			elif len(element.Children) != 0:
+				for child in element.Children:
+					if !Dominate(child):
+						heapq.heappush(Heap, (Mindist(child.Region),child))
 			else:
+				heapq.heappush(Heap, (Mindist(element.Region),element))
 
 		except:
-
-
+			print "GG"
 	pass
 
 DiskPageSize = 0
