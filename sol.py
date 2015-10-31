@@ -1,4 +1,4 @@
-import heapq, pdb
+import heapq, time
 
 class node(object):
     def __init__(self, Region = None, index = None, father = None, MinKey = None, MaxKey = None, Children = None):
@@ -249,8 +249,10 @@ def IsDominate(pointList, elementList):
     pass
 
 def Dominate(element):
+    global NumofComp
     elementList = MinList(element.Region)
     for point in SkylinePoints:
+    	NumofComp += 1
         pointList = MinList(point.Region)
         if IsDominate(pointList, elementList):
             return True
@@ -273,26 +275,32 @@ def BBS(root):
                 SkylinePoints.append(element)
 
         except:
-            print "GG"
-            for points in SkylinePoints:
-                print points.Region
+            # print "GG"
+            # for points in SkylinePoints:
+            #     print points.Region
+            # print len(SkylinePoints)
             break
     pass
 
-DiskPageSize = 0
-KeySize = 0
-PointerSize = 0
-Dimension = []
-NumDimension = 0
-NumMaxKey = 0
-NumMinKey = 0
-DefaultDict = {}
-DefaultKeys = []
-Heap = []
-SkylinePoints = []
-Root = None
 if __name__ == "__main__":
-    with open('query2.txt','r') as f:
+    Start_Time = 0
+    End_Time = 0
+    NumofComp = 0
+
+    Start_Time = time.time()
+    DiskPageSize = 0
+    KeySize = 0
+    PointerSize = 0
+    Dimension = []
+    NumDimension = 0
+    NumMaxKey = 0
+    NumMinKey = 0
+    DefaultDict = {}
+    DefaultKeys = []
+    Heap = []
+    SkylinePoints = []
+    Root = None
+    with open('../sample_query.txt','r') as f:
         # Dimension = [i- 1 for i in map(int, f.readline().strip().split())]
         Dimension = map(int, f.readline().strip().split())
         NumDimension = len(Dimension)
@@ -309,9 +317,9 @@ if __name__ == "__main__":
         DefaultDict = dict.fromkeys(DefaultKeys, None)
 
     Root = node()
-    with open('sample2.txt','r') as f:
+    with open('../sample_ind.txt','r') as f:
         for Object in f:
-            Object = map(int, Object.strip().split())
+            Object = map(float, Object.strip().split())
             Object2 = [Object[i] for i in Dimension]
             i = 0
             TempDict = {}
@@ -323,4 +331,141 @@ if __name__ == "__main__":
                 TempDict[key1] = Object2[i]
                 i += 1
             Root = Insert(Root, node(Region = TempDict, index = Object[0]))
+        End_Time = time.time()
+        print 'sample_ind.txt ----------------------------------------'
+        print 'Minimum Key in a Node = ' + str(NumMinKey)
+        print 'Maximum Key in a Node = ' + str(NumMaxKey)
+        print 'Time to build the Tree = ' + str(End_Time - Start_Time)
+        Start_Time = time.time()
         BBS(Root)
+        End_Time = time.time()
+        print 'Time to calculate Skyline = ' + str(End_Time - Start_Time)
+        print 'Number of Skyline = ' + str(len(SkylinePoints))
+        print 'Number of Comparision = ' + str(NumofComp)
+        print 'Index of Skyline Points ------------------------------------'
+        print sorted([int(i.index) for i in SkylinePoints])
+
+    Start_Time = 0
+    End_Time = 0
+    NumofComp = 0
+
+    Start_Time = time.time()
+    DiskPageSize = 0
+    KeySize = 0
+    PointerSize = 0
+    Dimension = []
+    NumDimension = 0
+    NumMaxKey = 0
+    NumMinKey = 0
+    DefaultDict = {}
+    DefaultKeys = []
+    Heap = []
+    SkylinePoints = []
+    Root = None
+    with open('../sample_query.txt','r') as f:
+        # Dimension = [i- 1 for i in map(int, f.readline().strip().split())]
+        Dimension = map(int, f.readline().strip().split())
+        NumDimension = len(Dimension)
+        DiskPageSize = int(f.readline().strip())
+        string = f.readline().strip().split()
+        PointerSize = int(string[0])
+        KeySize = int(string[1])
+        NumMaxKey = divmod(DiskPageSize, PointerSize + KeySize)[0]
+        NumMinKey = NumMaxKey/2
+        DefaultKeys = []
+        for i in range(NumDimension):
+            DefaultKeys.append(str(i) + 'min')
+            DefaultKeys.append(str(i) + 'max')
+        DefaultDict = dict.fromkeys(DefaultKeys, None)
+
+    Root = node()
+    with open('../sample_cor.txt','r') as f:
+        for Object in f:
+            Object = map(float, Object.strip().split())
+            Object2 = [Object[i] for i in Dimension]
+            i = 0
+            TempDict = {}
+            TempDict = dict.fromkeys(DefaultKeys, None)
+            while i < NumDimension:
+                key0 = str(i) + 'min'
+                key1 = str(i) + 'max'
+                TempDict[key0] = Object2[i]
+                TempDict[key1] = Object2[i]
+                i += 1
+            Root = Insert(Root, node(Region = TempDict, index = Object[0]))
+        End_Time = time.time()
+        print 'sample_cor.txt ----------------------------------------'
+        print 'Minimum Key in a Node = ' + str(NumMinKey)
+        print 'Maximum Key in a Node = ' + str(NumMaxKey)
+        print 'Time to build the Tree = ' + str(End_Time - Start_Time)
+        Start_Time = time.time()
+        BBS(Root)
+        End_Time = time.time()
+        print 'Time to calculate Skyline = ' + str(End_Time - Start_Time)
+        print 'Number of Skyline = ' + str(len(SkylinePoints))
+        print 'Number of Comparision = ' + str(NumofComp)
+        print 'Index of Skyline Points ------------------------------------'
+        print sorted([int(i.index) for i in SkylinePoints])
+
+
+    Start_Time = 0
+    End_Time = 0
+    NumofComp = 0
+
+    Start_Time = time.time()
+    DiskPageSize = 0
+    KeySize = 0
+    PointerSize = 0
+    Dimension = []
+    NumDimension = 0
+    NumMaxKey = 0
+    NumMinKey = 0
+    DefaultDict = {}
+    DefaultKeys = []
+    Heap = []
+    SkylinePoints = []
+    Root = None
+    with open('../sample_query.txt','r') as f:
+        # Dimension = [i- 1 for i in map(int, f.readline().strip().split())]
+        Dimension = map(int, f.readline().strip().split())
+        NumDimension = len(Dimension)
+        DiskPageSize = int(f.readline().strip())
+        string = f.readline().strip().split()
+        PointerSize = int(string[0])
+        KeySize = int(string[1])
+        NumMaxKey = divmod(DiskPageSize, PointerSize + KeySize)[0]
+        NumMinKey = NumMaxKey/2
+        DefaultKeys = []
+        for i in range(NumDimension):
+            DefaultKeys.append(str(i) + 'min')
+            DefaultKeys.append(str(i) + 'max')
+        DefaultDict = dict.fromkeys(DefaultKeys, None)
+
+    Root = node()
+    with open('../sample_ant.txt','r') as f:
+        for Object in f:
+            Object = map(float, Object.strip().split())
+            Object2 = [Object[i] for i in Dimension]
+            i = 0
+            TempDict = {}
+            TempDict = dict.fromkeys(DefaultKeys, None)
+            while i < NumDimension:
+                key0 = str(i) + 'min'
+                key1 = str(i) + 'max'
+                TempDict[key0] = Object2[i]
+                TempDict[key1] = Object2[i]
+                i += 1
+            Root = Insert(Root, node(Region = TempDict, index = Object[0]))
+        End_Time = time.time()
+        print 'sample_ant.txt ----------------------------------------'
+        print 'Minimum Key in a Node = ' + str(NumMinKey)
+        print 'Maximum Key in a Node = ' + str(NumMaxKey)
+        print 'Time to build the Tree = ' + str(End_Time - Start_Time)
+        Start_Time = time.time()
+        BBS(Root)
+        End_Time = time.time()
+        print 'Time to calculate Skyline = ' + str(End_Time - Start_Time)
+        print 'Number of Skyline = ' + str(len(SkylinePoints))
+        print 'Number of Comparision = ' + str(NumofComp)
+        print 'Index of Skyline Points ------------------------------------'
+        print sorted([int(i.index) for i in SkylinePoints])

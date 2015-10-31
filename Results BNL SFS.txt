@@ -1,0 +1,42 @@
+Anticorrelated Dataset ----------------------------------------------------------------------------------------------------------------
+
+BNL
+
+Total Running Time = 0.488112
+Number of Comparisions = 670243
+
+SFS
+
+Total Running Time = 0.388824
+Number of Comparisions = 529973
+
+
+Correlated Dataset -------------------------------------------------------------------------------------------------------------------
+
+BNL
+
+Total Running Time = 0.00744
+Number of Comparisions = 2219
+
+SFS
+
+Total Running Time = 0.025929
+Number of Comparisions = 1215
+
+Independent Dataset ------------------------------------------------------------------------------------------------------------------
+
+BNL
+
+Total Running Time = 0.062267
+Number of Comparisions = 70120
+
+SFS
+
+Total Running Time = 0.03972
+Number of Comparisions = 33568
+
+Conclusion ---------------------------------------------------------------------------------------------------------------------------
+
+As it is evident from the above results that the order in which the objects are provided to the same algorithm have a drastic impact on its running time or in this case the number of comparisions. The number of comparision in case of SFS is much less than that to of BNL cause they are sorted with entropy as its key. One more inference that can be made is that the impact of order is much more evident in case of "correlated dataset" and "independent dataset" than that to of "anticorrelated dataset". The reason behind this is the skyline points is much less in case of correlated and external merge sort make them come first. So they prune most of the points in the dataset, so the number of passes is much less which results in lesser comparisions
+
+---------------------------------------------------------------------------------------------------------------------------------------
